@@ -14,7 +14,30 @@ moment.locale("pt-br");
 class App extends Component {
   state = {
     dobStartDate: null,
-    dobEndDate: null
+    dobEndDate: null,
+
+    gridData: [
+      {
+        name: "Wellington garcia",
+        dob: "2018-02-02",
+        txt: "test1"
+      },
+      {
+        name: "Flávio garcia",
+        dob: "2019-02-02",
+        txt: "test2"
+      },
+      {
+        name: "Alessandro garcia",
+        dob: "2015-02-02",
+        txt: "test3"
+      },
+      {
+        name: "Alessandro garcia",
+        dob: "2015-02-02",
+        txt: "test3"
+      }
+    ]
   };
 
   returnYears = () => {
@@ -23,6 +46,16 @@ class App extends Component {
       years.push(<option value={i}>{i}</option>);
     }
     return years;
+  };
+
+  uniq = item => {
+    const uniq = {};
+    const arr = this.state.gridData;
+    const arrFiltered = arr.filter(
+      obj => !uniq[obj.name] && (uniq[obj.name] = true)
+    );
+
+    return arrFiltered;
   };
 
   renderMonthElement = ({ month, onMonthSelect, onYearSelect }) => (
@@ -48,21 +81,24 @@ class App extends Component {
     </div>
   );
 
-  gridData = [
-    {
-      dob: "2018-02-02",
-      txt: "test1"
-    },
-    {
-      dob: "2019-02-02",
-      txt: "test2"
-    },
-    {
-      dob: "2015-02-02",
-      txt: "test3"
-    }
-  ];
   gridColumns = [
+    {
+      Header: "Owner",
+      accessor: "name",
+      headerClassName: "wordwrap",
+      Filter: ({ filter, onChange }) => (
+        <select
+          onChange={event => onChange(event.target.value)}
+          style={{ width: "100%" }}
+          value={filter ? filter.value : "all"}
+        >
+          <option value="">Todos</option>
+          {this.uniq().map(n => (
+            <option value={n.name}>{n.name}</option>
+          ))}
+        </select>
+      )
+    },
     {
       Header: "txt",
       accessor: "txt",
@@ -126,10 +162,11 @@ class App extends Component {
   ];
 
   render() {
+    console.log(this.uniq());
     return (
       <div className="App">
         <ReactTable
-          data={this.gridData}
+          data={this.state.gridData}
           columns={this.gridColumns}
           defaultPageSize={10}
           className="-striped -highlight"
