@@ -107,7 +107,7 @@ class App extends Component {
         <input
           type="text"
           value={filter ? filter.value : ""}
-          placeholder="Chercher..."
+          placeholder="Pesquisar..."
           style={{ width: "100%" }}
           onChange={event => onChange(event.target.value)}
         />
@@ -122,8 +122,6 @@ class App extends Component {
         <DateRangePicker
           startDate={this.state.dobStartDate}
           endDate={this.state.dobEndDate}
-          // onDatesChange={({ startDate, endDate }) => {this.setState({ dobStartDate: startDate, dobEndDate: endDate }); onFilterChange({startDate, endDate});}}
-
           onDatesChange={({ startDate, endDate }) => {
             this.setState(
               { dobStartDate: startDate, dobEndDate: endDate },
@@ -170,13 +168,13 @@ class App extends Component {
           columns={this.gridColumns}
           defaultPageSize={10}
           className="-striped -highlight"
-          previousText="Précedente"
-          nextText="Suivante"
-          loadingText="Chargement..."
-          noDataText="Aucun contact n'a été trouvé"
-          pageText="Page"
-          ofText="sur"
-          rowsText="lignes"
+          previousText="Procedente"
+          nextText="Seguinte"
+          loadingText="Carregando..."
+          noDataText="Nenhum dado encontrado"
+          pageText="Página"
+          ofText="de"
+          rowsText="Linhas"
           showFilters="true"
           resizable="true"
           filterable
